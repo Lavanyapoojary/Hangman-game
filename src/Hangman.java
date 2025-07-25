@@ -1,5 +1,14 @@
 import javax.swing.*;
 public class Hangman extends JFrame{
+    // counts the number of incorrect guesses player has made
+    private int incorrectGuesses;
+
+    //store the challenge from the WordDB here
+    private String[] wordChallenge;
+
+    private final WordDB wordDB;
+    private JLabel hangmanImage;
+
     public Hangman(){
         super("Hangman Game(Java Ed.)");
         setSize(CommonConstants.FRAME_SIZE);
@@ -8,6 +17,17 @@ public class Hangman extends JFrame{
         setLayout(null);
         setResizable(false);
 
+        //init vars
+        wordDB - new WordDB();
+        wordChallenge = wordDB.loadChallenge();
+        addGuiComponents();
+
+
+    }
+    private void addGuiComponents(){
+
+        // hangman image
+        hangmanImage = CustomTools.loadImage();
     }
 }
 
