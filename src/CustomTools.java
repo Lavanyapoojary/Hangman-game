@@ -12,7 +12,7 @@ public class CustomTools {
              image = ImageIO.read(inputStream);
              return new JLabel(new ImageIcon(image));
         }catch(Exception e){
-            System.out.println("Error:" + e);
+            System.out.println("Error:  " + e);
         }
         return null;
     }
