@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -12,58 +13,51 @@ public class WordDB {
     private HashMap<String, String[]> wordList;
     private ArrayList<String> categories;
 
-    public WordDB() {
+    public WordDB()
+    try
+
+    {
         wordList = new HashMap<>();
         categories = new ArrayList<>();
 
-        try {
-            // Safely get resource URL
-            URL resourceURL = getClass().getClassLoader().getResource(CommonConstants.DATA_PATH);
-            if (resourceURL == null) {
-                throw new IOException("Could not find resource: " + CommonConstants.DATA_PATH);
-            }
+        //get file path
+        String filepath = getClass().getClassLoader().getResource(CommonConstants.DATA_PATH).getPath();
+        if (filepath.contains("%20")) filepath = filepath.replaceAll("%20", " ");
+        BufferedReader reader = new BufferedReader(new FileReader(filepath));
+        // iterates through each line in the data.txt
+        String line;
+        while ((line = reader.readLine()) != null){
+            //split the data by ","
+            String parts = line.split(",");
 
-            // Get path and handle spaces
-            String filePath = resourceURL.getPath().replaceAll("%20", " ");
+            //the first word of each line represents the category
+            String category = parts[0];
+            categories.add(category);
 
-            // Read the file
-            BufferedReader reader = new BufferedReader(new FileReader(filePath));
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // Skip empty lines
-                if (line.trim().isEmpty()) continue;
-
-                String[] parts = line.split(",");
-                if (parts.length < 2) continue; // Skip lines without words
-
-                String category = parts[0].trim();
-                String[] values = Arrays.copyOfRange(parts, 1, parts.length);
-
-                categories.add(category);
-                wordList.put(category, values);
-            }
-
-            reader.close();
-        } catch (IOException e) {
-            System.out.println("Error loading word data: " + e.getMessage());
+            //the rest of the values from parts will be the words relative to the category
+            String values[] = Arrays.copyOfRange(parts, 1, parts.length);
+            wordList.put(category, values);
         }
+    }catch(IOException e){
+        System.out.println("Error: " + e);
+    }
     }
 
-    public String[] loadChallenge() {
-        if (categories.isEmpty()) {
-            return new String[]{"NO_CATEGORY", "NO_WORD"};
-        }
+    public String[] loadChallenge(){
+    Random rand = new Random();
 
-        Random rand = new Random();
+    //generate random number to choose category
         String category = categories.get(rand.nextInt(categories.size()));
-        String[] categoryWords = wordList.get(category);
 
-        if (categoryWords == null || categoryWords.length == 0) {
-            return new String[]{category.toUpperCase(), "NO_WORD"};
-        }
+        //generate random number  to choose the value from category
+        String[] categoryValues = wordList.get(Category);
+        String word = categoryValues[rand.nextInt(categoryValues.length)];
 
-        String word = categoryWords[rand.nextInt(categoryWords.length)];
+        //[0]->category and [1]-> word
         return new String[]{category.toUpperCase(), word.toUpperCase()};
+
     }
-}
+
+
+
+
