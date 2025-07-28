@@ -19,7 +19,7 @@ public class Hangman extends JFrame {
         setResizable(false);
 
         // init vars
-        wordDB = new WordDB(); // 🔧 Fixed typo: used '=' instead of '-'
+        wordDB = new WordDB();
         wordChallenge = wordDB.loadChallenge();
         addGuiComponents();
     }
@@ -27,7 +27,7 @@ public class Hangman extends JFrame {
     private void addGuiComponents() {
         // hangman image
         hangmanImage = CustomTools.loadImage(CommonConstants.IMAGE_PATH);
-        hangmanImage.setBounds(0, 0,
+        hangmanImage.setBounds(0, 0, hangmanImage.getPreferredSize().width, hangmanImage.getPreferredSize().height);
                 hangmanImage.getPreferredSize().width,
                 hangmanImage.getPreferredSize().height);
 

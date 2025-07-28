@@ -2,7 +2,6 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
-
 public class CustomTools {
     //create a JLabel with an Image
     public static JLabel loadImage(String resource){
